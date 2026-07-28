@@ -50,18 +50,41 @@
 
         <thead class="table-dark">
         <tr>
+
             <th>ID</th>
-            <th>Name</th>
+
+            <th>
+                <a class="text-white"
+                   th:href="@{/employees(
+                pageNo=0,
+                sortField='firstName',
+                sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'}
+           )}">
+                    Name
+                </a>
+            </th>
+
             <th>Email</th>
-            <th>Department</th>
-            <th>Actions</th>
+
+            <th>
+                <a class="text-white"
+                   th:href="@{/employees(
+                pageNo=0,
+                sortField='department',
+                sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'}
+           )}">
+                    Department
+                </a>
+            </th>
+            <th>actions</th>
+
         </tr>
         </thead>
 
         <tbody>
 
         <tr th:if="${employees.empty}">
-            <td colspan="4" class="text-center">
+            <td colspan="5" class="text-center">
                 No employees found
                 <span th:if="${keyword}">
             for "<span th:text="${keyword}"></span>"
@@ -102,6 +125,59 @@
         </tbody>
 
     </table>
+
+    <nav>
+        <ul class="pagination">
+
+            <li class="page-item"
+                th:classappend="${currentPage == 0} ? 'disabled'">
+
+                <a class="page-link"
+                   th:href="@{/employees(
+pageNo=${i},
+keyword=${keyword},
+sortField=${sortField},
+sortDirection=${sortDirection}
+)}">
+                    Previous
+                </a>
+
+            </li>
+
+
+            <li class="page-item"
+                th:each="i : ${#numbers.sequence(0,totalPages-1)}">
+
+                <a class="page-link"
+                   th:text="${i+1}"
+                   th:href="@{/employees(
+pageNo=${i},
+keyword=${keyword},
+sortField=${sortField},
+sortDirection=${sortDirection}
+)}">
+                </a>
+
+            </li>
+
+
+            <li class="page-item"
+                th:classappend="${currentPage == totalPages-1} ? 'disabled'">
+
+                <a class="page-link"
+                   th:href="@{/employees(
+pageNo=${i},
+keyword=${keyword},
+sortField=${sortField},
+sortDirection=${sortDirection}
+)}">
+                    Next
+                </a>
+
+            </li>
+
+        </ul>
+    </nav>
 
 </div>
 

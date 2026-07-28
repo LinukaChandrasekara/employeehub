@@ -4,6 +4,11 @@ import com.linuka.employeehub.entity.Employee;
 import com.linuka.employeehub.exception.EmployeeNotFoundException;
 import com.linuka.employeehub.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 
 import java.util.List;
 
@@ -17,8 +22,22 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+    public Page<Employee> getAllEmployees(
+            int pageNo,
+            int pageSize,
+            String sortField,
+            String sortDirection) {
+
+        Sort sort = sortDirection.equalsIgnoreCase("asc")
+                ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
+
+
+        Pageable pageable =
+                PageRequest.of(pageNo, pageSize, sort);
+
+
+        return employeeRepository.findAll(pageable);
     }
 
     @Override
@@ -68,14 +87,30 @@ public class EmployeeServiceImpl implements EmployeeService{
         employeeRepository.delete(employee);
     }
     @Override
-    public List<Employee> searchEmployees(String keyword) {
+    public Page<Employee> searchEmployees(
+            String keyword,
+            int pageNo,
+            int pageSize,
+            String sortField,
+            String sortDirection) {
+
+
+        Sort sort = sortDirection.equalsIgnoreCase("asc")
+                ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
+
+
+        Pageable pageable =
+                PageRequest.of(pageNo, pageSize, sort);
+
 
         return employeeRepository
                 .findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrDepartmentContainingIgnoreCase(
                         keyword,
                         keyword,
                         keyword,
-                        keyword
+                        keyword,
+                        pageable
                 );
     }
 }

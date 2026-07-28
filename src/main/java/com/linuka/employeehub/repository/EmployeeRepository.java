@@ -6,17 +6,20 @@
 package com.linuka.employeehub.repository;
 
 import com.linuka.employeehub.entity.Employee;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-    List<Employee> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrDepartmentContainingIgnoreCase(
+    Page<Employee> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrDepartmentContainingIgnoreCase(
             String firstName,
             String lastName,
             String email,
-            String department
+            String department,
+            Pageable pageable
     );
 
 }
