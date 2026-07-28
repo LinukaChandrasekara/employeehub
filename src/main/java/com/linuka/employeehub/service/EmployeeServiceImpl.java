@@ -67,4 +67,15 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         employeeRepository.delete(employee);
     }
+    @Override
+    public List<Employee> searchEmployees(String keyword) {
+
+        return employeeRepository
+                .findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrDepartmentContainingIgnoreCase(
+                        keyword,
+                        keyword,
+                        keyword,
+                        keyword
+                );
+    }
 }

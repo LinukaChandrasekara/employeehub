@@ -14,5 +14,7 @@ public interface EmployeeService {
 
     Employee updateEmployee(Long Id, Employee employee);
 
+    List<Employee> searchEmployees(String keyword);
+
     void deleteEmployee(Long id);
 }

@@ -20,6 +20,32 @@
         Add Employee
     </a>
 
+    <form th:action="@{/employees}" method="get" class="row mb-3">
+
+        <div class="col-md-8">
+            <input
+                    type="text"
+                    class="form-control"
+                    name="keyword"
+                    th:value="${keyword}"
+                    placeholder="Search by name, email or department">
+        </div>
+
+        <div class="col-md-2">
+            <button class="btn btn-primary w-100">
+                Search
+            </button>
+        </div>
+
+        <div class="col-md-2">
+            <a th:href="@{/employees}"
+               class="btn btn-secondary w-100">
+                Clear
+            </a>
+        </div>
+
+    </form>
+
     <table class="table table-bordered">
 
         <thead class="table-dark">
@@ -33,6 +59,15 @@
         </thead>
 
         <tbody>
+
+        <tr th:if="${employees.empty}">
+            <td colspan="4" class="text-center">
+                No employees found
+                <span th:if="${keyword}">
+            for "<span th:text="${keyword}"></span>"
+        </span>
+            </td>
+        </tr>
 
         <tr th:each="employee : ${employees}">
 
