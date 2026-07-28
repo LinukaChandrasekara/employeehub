@@ -1,6 +1,7 @@
 package com.linuka.employeehub.service;
 
 import com.linuka.employeehub.entity.Employee;
+import com.linuka.employeehub.exception.EmployeeNotFoundException;
 import com.linuka.employeehub.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,11 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Employee getEmployeeById(Long Id) {
-        return employeeRepository.findById(Id).orElse(null);
+        return employeeRepository.findById(Id)
+                .orElseThrow(() ->
+                        new EmployeeNotFoundException(
+                                "Employee with ID " + Id + " was not found"
+                        ));
     }
 
     @Override
@@ -34,25 +39,32 @@ public class EmployeeServiceImpl implements EmployeeService{
     public Employee updateEmployee(Long id, Employee employee) {
 
         Employee existingEmployee = employeeRepository.findById(id)
-                .orElse(null);
+                .orElseThrow(() ->
+                        new EmployeeNotFoundException(
+                                "Employee with ID " + id + " was not found"
+                        ));
 
-        if(existingEmployee != null) {
+        existingEmployee.setFirstName(employee.getFirstName());
+        existingEmployee.setLastName(employee.getLastName());
+        existingEmployee.setEmail(employee.getEmail());
+        existingEmployee.setPhone(employee.getPhone());
+        existingEmployee.setDepartment(employee.getDepartment());
+        existingEmployee.setPosition(employee.getPosition());
+        existingEmployee.setSalary(employee.getSalary());
+        existingEmployee.setHireDate(employee.getHireDate());
 
-            existingEmployee.setFirstName(employee.getFirstName());
-            existingEmployee.setLastName(employee.getLastName());
-            existingEmployee.setEmail(employee.getEmail());
-            existingEmployee.setDepartment(employee.getDepartment());
-            existingEmployee.setPosition(employee.getPosition());
-            existingEmployee.setSalary(employee.getSalary());
-
-            return employeeRepository.save(existingEmployee);
-        }
-
-        return null;
+        return employeeRepository.save(existingEmployee);
     }
 
     @Override
     public void deleteEmployee(Long id) {
-        employeeRepository.deleteById(id);
+
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() ->
+                        new EmployeeNotFoundException(
+                                "Employee with ID " + id + " was not found"
+                        ));
+
+        employeeRepository.delete(employee);
     }
 }
