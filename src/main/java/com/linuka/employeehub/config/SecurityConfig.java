@@ -46,11 +46,23 @@ public class SecurityConfig {
                 )
 
                 .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/employees", true)
                         .permitAll()
                 )
 
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/login")
+
+                        .logoutUrl("/logout")
+
+                        .logoutSuccessUrl("/login?logout")
+
+                        .invalidateHttpSession(true)
+
+                        .clearAuthentication(true)
+
+                        .deleteCookies("JSESSIONID")
+
                         .permitAll()
                 );
 

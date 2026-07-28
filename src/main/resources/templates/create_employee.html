@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <title>Add Employee</title>
@@ -11,6 +12,8 @@
 </head>
 
 <body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <div class="container mt-5">
 
