@@ -134,11 +134,11 @@
 
                 <a class="page-link"
                    th:href="@{/employees(
-pageNo=${i},
-keyword=${keyword},
-sortField=${sortField},
-sortDirection=${sortDirection}
-)}">
+            pageNo=${currentPage - 1},
+            keyword=${keyword},
+            sortField=${sortField},
+            sortDirection=${sortDirection}
+       )}">
                     Previous
                 </a>
 
@@ -166,11 +166,11 @@ sortDirection=${sortDirection}
 
                 <a class="page-link"
                    th:href="@{/employees(
-pageNo=${i},
-keyword=${keyword},
-sortField=${sortField},
-sortDirection=${sortDirection}
-)}">
+            pageNo=${currentPage + 1},
+            keyword=${keyword},
+            sortField=${sortField},
+            sortDirection=${sortDirection}
+       )}">
                     Next
                 </a>
 
