@@ -3,6 +3,7 @@ package com.linuka.employeehub.controller;
 import com.linuka.employeehub.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,11 @@ public class EmployeeController {
             @RequestParam(defaultValue = "5") int pageSize,
             @RequestParam(defaultValue = "firstName") String sortField,
             @RequestParam(defaultValue = "asc") String sortDirection,
-            Model model) {
+            Model model,
+            Authentication authentication) {
+
+
+        System.out.println(authentication.getAuthorities());
 
         Page<Employee> page;
 
