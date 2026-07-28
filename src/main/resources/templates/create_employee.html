@@ -29,6 +29,9 @@
                     type="text"
                     class="form-control"
                     th:field="*{firstName}">
+            <div class="text-danger"
+                 th:errors="*{firstName}">
+            </div>
         </div>
 
 
@@ -39,6 +42,9 @@
                     type="text"
                     class="form-control"
                     th:field="*{lastName}">
+            <div class="text-danger"
+                 th:errors="*{lastName}">
+            </div>
         </div>
 
 
@@ -49,6 +55,34 @@
                     type="email"
                     class="form-control"
                     th:field="*{email}">
+            <div class="text-danger"
+                 th:errors="*{email}">
+            </div>
+
+        </div>
+        <div class="mb-3">
+            <label>Phone</label>
+
+            <input
+                    type="text"
+                    class="form-control"
+                    th:field="*{phone}">
+
+            <div class="text-danger"
+                 th:errors="*{phone}">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label>Position</label>
+
+            <input
+                    type="text"
+                    class="form-control"
+                    th:field="*{position}">
+
+            <div class="text-danger"
+                 th:errors="*{position}">
+            </div>
         </div>
 
 
@@ -59,6 +93,9 @@
                     type="text"
                     class="form-control"
                     th:field="*{department}">
+            <div class="text-danger"
+                 th:errors="*{department}">
+            </div>
         </div>
 
 
@@ -69,13 +106,23 @@
                     type="number"
                     class="form-control"
                     th:field="*{salary}">
+            <div class="text-danger"
+                 th:errors="*{salary}">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label>Hire Date</label>
+
+            <input
+                    type="date"
+                    class="form-control"
+                    th:field="*{hireDate}">
         </div>
 
 
-        <button class="btn btn-success">
+        <button type="submit" class="btn btn-success">
             Save Employee
         </button>
-
 
     </form>
 
