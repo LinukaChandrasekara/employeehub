@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service  //This class contains business logic and should be managed as a Spring bean
@@ -86,6 +87,25 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         employeeRepository.delete(employee);
     }
+
+    @Override
+    public long countEmployees() {
+        return employeeRepository.countBy();
+    }
+
+    @Override
+    public long countDepartments() {
+        return employeeRepository.countDistinctDepartments();
+    }
+
+    @Override
+    public BigDecimal averageSalary() {
+
+        BigDecimal avg = employeeRepository.averageSalary();
+
+        return avg != null ? avg : BigDecimal.ZERO;
+    }
+
     @Override
     public Page<Employee> searchEmployees(
             String keyword,

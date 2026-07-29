@@ -3,6 +3,7 @@ package com.linuka.employeehub.service;
 import com.linuka.employeehub.entity.Employee;
 import org.springframework.data.domain.Page;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface EmployeeService {
@@ -29,4 +30,10 @@ public interface EmployeeService {
     );
 
     void deleteEmployee(Long id);
+
+    long countEmployees();
+
+    long countDepartments();
+
+    BigDecimal averageSalary();
 }

@@ -120,5 +120,25 @@ public class EmployeeController {
 
         return "redirect:/employees";
     }
+    @GetMapping("/dashboard")
+    public String dashboard(Model model) {
+
+        model.addAttribute(
+                "employeeCount",
+                employeeService.countEmployees()
+        );
+
+        model.addAttribute(
+                "departmentCount",
+                employeeService.countDepartments()
+        );
+
+        model.addAttribute(
+                "averageSalary",
+                employeeService.averageSalary()
+        );
+
+        return "dashboard";
+    }
 
 }
