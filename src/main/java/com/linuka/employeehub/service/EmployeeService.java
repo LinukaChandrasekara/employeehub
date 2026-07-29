@@ -41,4 +41,6 @@ public interface EmployeeService {
     List<DepartmentStats> getDepartmentStatistics();
 
     List<SalaryStats> getSalaryStatistics();
+
+    List<Employee> getRecentEmployees();
 }

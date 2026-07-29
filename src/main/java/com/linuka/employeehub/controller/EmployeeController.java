@@ -146,6 +146,10 @@ public class EmployeeController {
                 "salaryStats",
                 employeeService.getSalaryStatistics()
         );
+        model.addAttribute(
+                "recentEmployees",
+                employeeService.getRecentEmployees()
+        );
 
         return "dashboard";
     }

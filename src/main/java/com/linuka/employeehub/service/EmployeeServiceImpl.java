@@ -143,4 +143,11 @@ public class EmployeeServiceImpl implements EmployeeService{
     public List<SalaryStats> getSalaryStatistics() {
         return employeeRepository.getSalaryStatistics();
     }
+
+    @Override
+    public List<Employee> getRecentEmployees() {
+
+        return employeeRepository.findTop5ByOrderByHireDateDesc();
+
+    }
 }

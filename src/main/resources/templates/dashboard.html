@@ -167,6 +167,42 @@
         <canvas id="salaryChart"></canvas>
 
     </div>
+    <h3 class="mt-5">
+        Recent Hires
+    </h3>
+
+    <table class="table table-bordered shadow">
+
+        <thead class="table-dark">
+
+        <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Hire Date</th>
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        <tr th:each="employee : ${recentEmployees}">
+
+            <td>
+                <span th:text="${employee.firstName}"></span>
+                <span th:text="${employee.lastName}"></span>
+            </td>
+
+            <td th:text="${employee.department}"></td>
+
+            <td th:text="${employee.hireDate}"></td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
 
 </div>
 

@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.domain.PageRequest;
+import java.util.List;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -43,7 +45,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
        ORDER BY COUNT(e) DESC
        """)
     List<DepartmentStats> getDepartmentStatistics();
-    
+
     @Query("""
 SELECT new com.linuka.employeehub.dto.SalaryStats(
     CASE
@@ -65,6 +67,6 @@ GROUP BY
 """)
     List<SalaryStats> getSalaryStatistics();
 
-
+    List<Employee> findTop5ByOrderByHireDateDesc();
 
 }
