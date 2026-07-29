@@ -28,7 +28,8 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers("/css/**").permitAll()
+                        .requestMatchers("/login", "/css/**")
+                        .permitAll()
 
                         .requestMatchers("/employees")
                         .hasAnyRole("USER", "ADMIN")
@@ -37,7 +38,7 @@ public class SecurityConfig {
                                 "/employees/edit/**",
                                 "/employees/delete/**")
                         .hasRole("ADMIN")
-                        .requestMatchers("/login").permitAll()
+
                         .anyRequest().authenticated()
                 )
 
