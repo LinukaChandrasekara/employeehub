@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-
+import com.linuka.employeehub.dto.DepartmentStats;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -132,5 +132,9 @@ public class EmployeeServiceImpl implements EmployeeService{
                         keyword,
                         pageable
                 );
+    }
+    @Override
+    public List<DepartmentStats> getDepartmentStatistics() {
+        return employeeRepository.getDepartmentStatistics();
     }
 }

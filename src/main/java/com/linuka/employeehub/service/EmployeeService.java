@@ -2,7 +2,7 @@ package com.linuka.employeehub.service;
 
 import com.linuka.employeehub.entity.Employee;
 import org.springframework.data.domain.Page;
-
+import com.linuka.employeehub.dto.DepartmentStats;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -36,4 +36,6 @@ public interface EmployeeService {
     long countDepartments();
 
     BigDecimal averageSalary();
+
+    List<DepartmentStats> getDepartmentStatistics();
 }

@@ -5,6 +5,7 @@
 
 package com.linuka.employeehub.repository;
 
+import com.linuka.employeehub.dto.DepartmentStats;
 import com.linuka.employeehub.entity.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,5 +31,18 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Query("SELECT AVG(e.salary) FROM Employee e")
     BigDecimal averageSalary();
+
+    @Query("""
+       SELECT new com.linuka.employeehub.dto.DepartmentStats(
+           e.department,
+           COUNT(e)
+       )
+       FROM Employee e
+       GROUP BY e.department
+       ORDER BY COUNT(e) DESC
+       """)
+    List<DepartmentStats> getDepartmentStatistics();
+
+
 
 }

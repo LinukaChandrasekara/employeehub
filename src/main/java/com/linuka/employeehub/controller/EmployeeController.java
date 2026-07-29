@@ -137,6 +137,10 @@ public class EmployeeController {
                 "averageSalary",
                 employeeService.averageSalary()
         );
+        model.addAttribute(
+                "departmentStats",
+                employeeService.getDepartmentStatistics()
+        );
 
         return "dashboard";
     }
