@@ -3,187 +3,619 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <title>EmployeeHub</title>
+
+    <title>EmployeeHub | Employees</title>
+
 
     <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
             rel="stylesheet">
+
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+            rel="stylesheet">
+
+
+
+    <style>
+
+
+        body {
+
+            background:#f4f6fb;
+
+            font-family:'Segoe UI',sans-serif;
+
+        }
+
+
+
+        .page-title {
+
+            font-weight:700;
+
+            color:#4b3f72;
+
+        }
+
+
+
+        .content-card {
+
+            background:white;
+
+            padding:30px;
+
+            border-radius:20px;
+
+            box-shadow:
+            0 10px 30px rgba(0,0,0,.08);
+
+        }
+
+
+
+        .add-btn {
+
+            background:
+            linear-gradient(135deg,#667eea,#764ba2);
+
+            border:none;
+
+            border-radius:10px;
+
+            padding:10px 20px;
+
+            font-weight:600;
+
+        }
+
+
+
+        .add-btn:hover {
+
+            transform:translateY(-2px);
+
+        }
+
+
+
+        .search-box {
+
+            background:#f8f9fa;
+
+            padding:20px;
+
+            border-radius:15px;
+
+        }
+
+
+
+        .search-btn {
+
+            background:#667eea;
+
+            border:none;
+
+            border-radius:10px;
+
+            font-weight:600;
+
+        }
+
+
+
+        .clear-btn {
+
+            border-radius:10px;
+
+        }
+
+
+
+        .table-container {
+
+            border-radius:15px;
+
+            overflow:hidden;
+
+        }
+
+
+
+        table {
+
+            margin-bottom:0!important;
+
+        }
+
+
+
+        thead th {
+
+            padding:15px!important;
+
+        }
+
+
+
+        tbody td {
+
+            padding:14px!important;
+
+            vertical-align:middle;
+
+        }
+
+
+
+        tbody tr:hover {
+
+            background:#f8f9ff;
+
+        }
+
+
+
+        .action-btn {
+
+            border-radius:8px;
+
+            font-weight:500;
+
+        }
+
+
+
+        .pagination .page-link {
+
+            color:#667eea;
+
+            border-radius:8px;
+
+            margin:0 3px;
+
+        }
+
+
+
+        .pagination .active .page-link {
+
+            background:#667eea;
+
+            border-color:#667eea;
+
+            color:white;
+
+        }
+
+
+    </style>
+
+
 </head>
+
+
 
 <body>
 
+
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<div class="container mt-5">
 
-    <h1 class="mb-4">
-        Employee List
-    </h1>
-    <a sec:authorize="hasRole('ADMIN')"
-       th:href="@{/employees/new}"
-       class="btn btn-primary mb-3">
-        Add Employee
-    </a>
-    <form th:action="@{/employees}" method="get" class="row mb-3">
 
-        <div class="col-md-8">
-            <input
-                    type="text"
-                    class="form-control"
-                    name="keyword"
-                    th:value="${keyword}"
-                    placeholder="Search by name, email or department">
-        </div>
 
-        <div class="col-md-2">
-            <button class="btn btn-primary w-100">
-                Search
-            </button>
-        </div>
+<div class="container mt-5 mb-5">
 
-        <div class="col-md-2">
-            <a th:href="@{/employees}"
-               class="btn btn-secondary w-100">
-                Clear
+
+    <div class="content-card">
+
+
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+
+            <h1 class="page-title mb-0">
+
+                <i class="bi bi-people-fill"></i>
+
+                Employee List
+
+            </h1>
+
+
+
+
+            <a sec:authorize="hasRole('ADMIN')"
+               th:href="@{/employees/new}"
+               class="btn btn-primary add-btn">
+
+
+                <i class="bi bi-person-plus"></i>
+
+                Add Employee
+
+
             </a>
+
+
         </div>
 
-    </form>
 
-    <table class="table table-bordered">
 
-        <thead class="table-dark">
-        <tr>
 
-            <th>ID</th>
 
-            <th>
-                <a class="text-white"
-                   th:href="@{/employees(
-                pageNo=0,
-                sortField='firstName',
-                sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'}
-           )}">
-                    Name
-                </a>
-            </th>
 
-            <th>Email</th>
+        <!-- Search -->
 
-            <th>
-                <a class="text-white"
-                   th:href="@{/employees(
-                pageNo=0,
-                sortField='department',
-                sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'}
-           )}">
-                    Department
-                </a>
-            </th>
-            <th>actions</th>
 
-        </tr>
-        </thead>
+        <form th:action="@{/employees}"
+              method="get"
+              class="search-box row g-3 mb-4">
 
-        <tbody>
 
-        <tr th:if="${employees.empty}">
-            <td colspan="5" class="text-center">
-                No employees found
-                <span th:if="${keyword}">
-            for "<span th:text="${keyword}"></span>"
-        </span>
-            </td>
-        </tr>
+            <div class="col-md-8">
 
-        <tr th:each="employee : ${employees}">
 
-            <td th:text="${employee.id}"></td>
+                <input
+                        type="text"
+                        class="form-control"
+                        name="keyword"
+                        th:value="${keyword}"
+                        placeholder="Search by name, email or department">
 
-            <td>
-                <span th:text="${employee.firstName}"></span>
-                <span th:text="${employee.lastName}"></span>
-            </td>
 
-            <td th:text="${employee.email}"></td>
+            </div>
 
-            <td th:text="${employee.department}"></td>
 
-            <td sec:authorize="hasRole('ADMIN')">
 
-                <a th:href="@{/employees/edit/{id}(id=${employee.id})}"
-                   class="btn btn-warning btn-sm">
-                    Edit
+
+            <div class="col-md-2">
+
+
+                <button class="btn btn-primary w-100 search-btn">
+
+                    <i class="bi bi-search"></i>
+
+                    Search
+
+                </button>
+
+
+            </div>
+
+
+
+
+
+            <div class="col-md-2">
+
+
+                <a th:href="@{/employees}"
+                   class="btn btn-secondary w-100 clear-btn">
+
+
+                    <i class="bi bi-x-circle"></i>
+
+                    Clear
+
+
                 </a>
 
 
-                <a th:href="@{/employees/delete/{id}(id=${employee.id})}"
-                   onclick="return confirm('Are you sure you want to delete this employee?')">
-                    Delete
-                </a>
-
-            </td>
-
-        </tr>
-
-        </tbody>
-
-    </table>
-
-    <nav>
-        <ul class="pagination">
-
-            <li class="page-item"
-                th:classappend="${currentPage == 0} ? 'disabled'">
-
-                <a class="page-link"
-                   th:href="@{/employees(
-            pageNo=${currentPage - 1},
-            keyword=${keyword},
-            sortField=${sortField},
-            sortDirection=${sortDirection}
-       )}">
-                    Previous
-                </a>
-
-            </li>
+            </div>
 
 
-            <li class="page-item"
-                th:each="i : ${#numbers.sequence(0,totalPages-1)}">
-
-                <a class="page-link"
-                   th:text="${i+1}"
-                   th:href="@{/employees(
-pageNo=${i},
-keyword=${keyword},
-sortField=${sortField},
-sortDirection=${sortDirection}
-)}">
-                </a>
-
-            </li>
+        </form>
 
 
-            <li class="page-item"
-                th:classappend="${currentPage == totalPages-1} ? 'disabled'">
 
-                <a class="page-link"
-                   th:href="@{/employees(
-            pageNo=${currentPage + 1},
-            keyword=${keyword},
-            sortField=${sortField},
-            sortDirection=${sortDirection}
-       )}">
-                    Next
-                </a>
 
-            </li>
 
-        </ul>
-    </nav>
+
+
+        <!-- Table -->
+
+
+        <div class="table-container shadow-sm">
+
+
+            <table class="table table-bordered align-middle">
+
+
+                <thead class="table-dark">
+
+
+                <tr>
+
+
+                    <th>ID</th>
+
+
+                    <th>
+
+                        <a class="text-white text-decoration-none"
+                           th:href="@{/employees(
+                           pageNo=0,
+                           sortField='firstName',
+                           sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'}
+                           )}">
+
+
+                            <i class="bi bi-sort-alpha-down"></i>
+
+                            Name
+
+
+                        </a>
+
+
+                    </th>
+
+
+                    <th>Email</th>
+
+
+
+                    <th>
+
+
+                        <a class="text-white text-decoration-none"
+                           th:href="@{/employees(
+                           pageNo=0,
+                           sortField='department',
+                           sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'}
+                           )}">
+
+
+                            <i class="bi bi-building"></i>
+
+                            Department
+
+
+                        </a>
+
+
+                    </th>
+
+
+                    <th sec:authorize="hasRole('ADMIN')">
+                        Actions
+                    </th>
+
+
+                </tr>
+
+
+                </thead>
+
+
+
+
+
+                <tbody>
+
+
+
+                <tr th:if="${employees.empty}">
+
+
+                    <td colspan="5"
+                        class="text-center text-muted py-4">
+
+
+                        <i class="bi bi-person-x fs-3"></i>
+
+
+                        <br>
+
+
+                        No employees found
+
+
+                        <span th:if="${keyword}">
+
+                            for
+
+                            "<span th:text="${keyword}"></span>"
+
+                        </span>
+
+
+                    </td>
+
+
+                </tr>
+
+
+
+
+
+
+                <tr th:each="employee : ${employees}">
+
+
+                    <td th:text="${employee.id}"></td>
+
+
+
+                    <td>
+
+
+                        <i class="bi bi-person-circle text-primary"></i>
+
+
+                        <span th:text="${employee.firstName}"></span>
+
+                        <span th:text="${employee.lastName}"></span>
+
+
+                    </td>
+
+
+
+
+                    <td th:text="${employee.email}"></td>
+
+
+
+
+                    <td th:text="${employee.department}"></td>
+
+
+
+
+                    <td sec:authorize="hasRole('ADMIN')">
+
+
+                        <a th:href="@{/employees/edit/{id}(id=${employee.id})}"
+                           class="btn btn-warning btn-sm action-btn">
+
+
+                            <i class="bi bi-pencil"></i>
+
+                            Edit
+
+
+                        </a>
+
+
+
+
+                        <a th:href="@{/employees/delete/{id}(id=${employee.id})}"
+                           class="btn btn-danger btn-sm action-btn"
+                           onclick="return confirm('Are you sure you want to delete this employee?');">
+
+
+                            <i class="bi bi-trash"></i>
+
+                            Delete
+
+
+                        </a>
+
+
+                    </td>
+
+
+
+                </tr>
+
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <!-- Pagination -->
+
+
+        <nav class="mt-4">
+
+
+            <ul class="pagination justify-content-center">
+
+
+                <li class="page-item"
+                    th:classappend="${currentPage == 0} ? 'disabled'">
+
+
+                    <a class="page-link"
+                       th:href="@{/employees(
+                       pageNo=${currentPage - 1},
+                       keyword=${keyword},
+                       sortField=${sortField},
+                       sortDirection=${sortDirection}
+                       )}">
+
+
+                        Previous
+
+
+                    </a>
+
+
+                </li>
+
+
+
+
+
+
+                <li class="page-item"
+                    th:each="i : ${#numbers.sequence(0,totalPages-1)}">
+
+
+                    <a class="page-link"
+                       th:text="${i+1}"
+                       th:href="@{/employees(
+                       pageNo=${i},
+                       keyword=${keyword},
+                       sortField=${sortField},
+                       sortDirection=${sortDirection}
+                       )}">
+
+
+                    </a>
+
+
+                </li>
+
+
+
+
+
+
+                <li class="page-item"
+                    th:classappend="${currentPage == totalPages-1} ? 'disabled'">
+
+
+                    <a class="page-link"
+                       th:href="@{/employees(
+                       pageNo=${currentPage + 1},
+                       keyword=${keyword},
+                       sortField=${sortField},
+                       sortDirection=${sortDirection}
+                       )}">
+
+
+                        Next
+
+
+                    </a>
+
+
+                </li>
+
+
+
+            </ul>
+
+
+        </nav>
+
+
+
+    </div>
+
 
 </div>
 
+
+
 </body>
+
 </html>

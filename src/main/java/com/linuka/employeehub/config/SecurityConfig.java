@@ -37,7 +37,7 @@ public class SecurityConfig {
                                 "/employees/edit/**",
                                 "/employees/delete/**")
                         .hasRole("ADMIN")
-
+                        .requestMatchers("/login").permitAll()
                         .anyRequest().authenticated()
                 )
 
@@ -46,6 +46,7 @@ public class SecurityConfig {
                 )
 
                 .formLogin(form -> form
+                        .loginPage("/login")
                         .defaultSuccessUrl("/dashboard", true)
                         .permitAll()
                 )

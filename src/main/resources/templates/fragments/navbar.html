@@ -1,32 +1,207 @@
 <nav th:fragment="navbar"
-     class="navbar navbar-expand-lg navbar-dark bg-dark"
+     class="navbar navbar-expand-lg employee-navbar"
      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <div class="container">
 
-        <a class="navbar-brand" th:href="@{/employees}">
+    <style>
+
+        .employee-navbar {
+
+            background:
+            linear-gradient(135deg,
+            #667eea,
+            #764ba2);
+
+            box-shadow:
+            0 5px 20px rgba(0,0,0,0.15);
+
+            padding: 15px 0;
+
+        }
+
+
+        .brand-logo {
+
+            font-size: 26px;
+
+            font-weight: 700;
+
+            color: white !important;
+
+            letter-spacing: .5px;
+
+            transition: .3s;
+
+        }
+
+
+        .brand-logo:hover {
+
+            transform: translateY(-2px);
+
+        }
+
+
+        .welcome-text {
+
+            color: rgba(255,255,255,.9);
+
+            font-size: 15px;
+
+        }
+
+
+        .username {
+
+            font-weight: 700;
+
+            color: white;
+
+        }
+
+
+        .logout-btn {
+
+            border-radius: 10px;
+
+            padding: 8px 18px;
+
+            font-weight: 600;
+
+            border: none;
+
+            background:
+            linear-gradient(135deg,#ff416c,#ff4b2b);
+
+            transition: .3s;
+
+        }
+
+
+        .logout-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+            0 8px 15px rgba(255,65,108,.35);
+
+        }
+
+
+        .nav-container {
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+        }
+        .employee-navbar {
+
+            background: linear-gradient(135deg,#667eea,#764ba2) !important;
+
+            padding: 15px 0;
+
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+
+        }
+
+
+        .employee-navbar .navbar-brand {
+
+            color: white !important;
+
+            font-size: 26px;
+
+            font-weight: 700;
+
+        }
+
+
+        .employee-navbar .welcome-text {
+
+            color: white !important;
+
+        }
+
+
+        .employee-navbar .username {
+
+            color: white !important;
+
+            font-weight: 700;
+
+        }
+
+
+        .employee-navbar i {
+
+            color: white;
+
+        }
+
+
+    </style>
+
+
+
+    <div class="container nav-container">
+
+
+        <a class="navbar-brand brand-logo"
+           th:href="@{/employees}">
+
+            <i class="bi bi-people-fill"></i>
             EmployeeHub
+
         </a>
 
 
-        <div>
 
-            <span class="text-white me-3">
-                Welcome,
-                <span sec:authentication="name"></span>
+
+
+        <div class="d-flex align-items-center">
+
+
+        <span class="welcome-text me-3">
+
+            <i class="bi bi-person-circle"></i>
+
+            Welcome,
+
+            <span class="username"
+                  sec:authentication="name">
             </span>
 
+        </span>
 
-            <form th:action="@{/logout}" method="post" style="display:inline">
 
-                <button class="btn btn-danger">
+
+
+
+            <form th:action="@{/logout}"
+                  method="post"
+                  style="display:inline">
+
+
+                <button
+                        class="btn btn-danger logout-btn">
+
+                    <i class="bi bi-box-arrow-right"></i>
+
                     Logout
+
                 </button>
+
 
             </form>
 
+
         </div>
 
+
     </div>
+
 
 </nav>

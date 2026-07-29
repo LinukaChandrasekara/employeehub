@@ -49,20 +49,18 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query("""
 SELECT new com.linuka.employeehub.dto.SalaryStats(
     CASE
-        WHEN e.salary < 3000 THEN 'Below 3000'
-        WHEN e.salary BETWEEN 3000 AND 6000 THEN '3000 - 6000'
-        WHEN e.salary BETWEEN 6001 AND 10000 THEN '6001 - 10000'
-        ELSE 'Above 10000'
+        WHEN e.salary < 60000 THEN 'Below 60000'
+        WHEN e.salary BETWEEN 60000 AND 100000 THEN '60000 - 100000'
+        ELSE 'Above 100000'
     END,
     COUNT(e)
 )
 FROM Employee e
 GROUP BY
     CASE
-        WHEN e.salary < 3000 THEN 'Below 3000'
-        WHEN e.salary BETWEEN 3000 AND 6000 THEN '3000 - 6000'
-        WHEN e.salary BETWEEN 6001 AND 10000 THEN '6001 - 10000'
-        ELSE 'Above 10000'
+        WHEN e.salary < 60000 THEN 'Below 60000'
+        WHEN e.salary BETWEEN 60000 AND 100000 THEN '60000 - 100000'
+        ELSE 'Above 100000'
     END
 """)
     List<SalaryStats> getSalaryStatistics();
