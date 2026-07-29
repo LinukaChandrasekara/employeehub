@@ -1,5 +1,6 @@
 package com.linuka.employeehub.service;
 
+import com.linuka.employeehub.dto.SalaryStats;
 import com.linuka.employeehub.entity.Employee;
 import org.springframework.data.domain.Page;
 import com.linuka.employeehub.dto.DepartmentStats;
@@ -38,4 +39,6 @@ public interface EmployeeService {
     BigDecimal averageSalary();
 
     List<DepartmentStats> getDepartmentStatistics();
+
+    List<SalaryStats> getSalaryStatistics();
 }

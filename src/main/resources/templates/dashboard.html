@@ -160,8 +160,11 @@
         </div>
 
         <h3 class="mt-5">Employees by Department</h3>
-
         <canvas id="departmentChart"></canvas>
+
+
+        <h3 class="mt-5">Salary Distribution</h3>
+        <canvas id="salaryChart"></canvas>
 
     </div>
 
@@ -220,6 +223,51 @@
                     }
                 }
             }
+        }
+    });
+
+</script>
+<script th:inline="javascript">
+
+    const salaryLabels = [
+        /*[# th:each="stat : ${salaryStats}"]*/
+        [[${stat.range}]],
+        /*[/]*/
+    ];
+
+    const salaryCounts = [
+        /*[# th:each="stat : ${salaryStats}"]*/
+        [[${stat.employeeCount}]],
+        /*[/]*/
+    ];
+
+</script>
+<script>
+
+    const salaryCtx = document.getElementById('salaryChart');
+
+    new Chart(salaryCtx, {
+        type: 'pie',
+
+        data: {
+            labels: salaryLabels,
+
+            datasets: [{
+                label: 'Employees',
+
+                data: salaryCounts,
+
+                backgroundColor: [
+                    '#0d6efd',
+                    '#198754',
+                    '#ffc107',
+                    '#dc3545'
+                ]
+            }]
+        },
+
+        options: {
+            responsive: true
         }
     });
 

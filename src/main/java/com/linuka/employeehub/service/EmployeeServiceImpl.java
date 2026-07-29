@@ -1,5 +1,6 @@
 package com.linuka.employeehub.service;
 
+import com.linuka.employeehub.dto.SalaryStats;
 import com.linuka.employeehub.entity.Employee;
 import com.linuka.employeehub.exception.EmployeeNotFoundException;
 import com.linuka.employeehub.repository.EmployeeRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import com.linuka.employeehub.dto.DepartmentStats;
+
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -136,5 +138,9 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public List<DepartmentStats> getDepartmentStatistics() {
         return employeeRepository.getDepartmentStatistics();
+    }
+    @Override
+    public List<SalaryStats> getSalaryStatistics() {
+        return employeeRepository.getSalaryStatistics();
     }
 }
